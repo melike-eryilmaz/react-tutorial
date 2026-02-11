@@ -2,13 +2,7 @@ import { Button } from "@mantine/core";
 import { useState } from "react";
 
 function Square({value,onSquareClick}) {
-  //const [value, setValue] = useState(null);
-  //function handleClick(){
-    //setValue('X');
-    //console.log(value+' clicked')
-  //}
   return <Button variant="outline" color="red" className="square" onClick={onSquareClick}>{value}</Button>;
-  
   //return <button className="square" onClick={onSquareClick}>{value}</button>;
 }
 
@@ -23,42 +17,45 @@ function calculateWinner(squares) {
     [0, 4, 8],
     [2, 4, 6]
   ];
+
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a];
     }
   }
+
   return null;
 }
+
 export function Board({xIsNext,squares,onPlay}) {
-  //const [xIsNext,setXISnext] = useState(true);
-  //const [squares,setSquares] = useState(Array(9).fill(null));
   const winner = calculateWinner(squares);
   let status;
+
   if (winner) {
     status = "Winner: " + winner;
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
+
   function handleClick(index:number){
     /**const squares = [null, null, null, null, null, null, null, null, null];
        const nextSquares = ['X', null, null, null, null, null, null, null, null];
-      // Now `squares` is unchanged, but `nextSquares` first element is 'X' rather than `null`
+       Now `squares` is unchanged, but `nextSquares` first element is 'X' rather than `null`
      */
     if(squares[index] || calculateWinner(squares)) return;
+
     const nextSquares = squares.slice();
-   if(xIsNext){
-    nextSquares[index] = 'X';
-   }  
-   else{
-    nextSquares[index] = 'O';
-   }
-   onPlay(nextSquares);
-   //setSquares(nextSquares);
-   //setXISnext(!xIsNext);
- 
+    if(xIsNext){
+      nextSquares[index] = 'X';
+    }  
+    else{
+      nextSquares[index] = 'O';
+    }
+
+    onPlay(nextSquares);
   }
+
   return (
     <>
       <div className="status">{status}</div>
@@ -86,29 +83,33 @@ export default function Game() {
   const [currentMove,setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
+
   function handlePlay(nextSquares){
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
-
-  }     
-    function jumpTo(nextMove) {
-    setCurrentMove(nextMove);
-    
   }
-   const moves = history.map((squares, move) => {
+
+  function jumpTo(nextMove) {
+    setCurrentMove(nextMove);
+  }
+
+    const moves = history.map((squares, move) => {
     let description;
+
     if (move > 0) {
       description = 'Go to move #' + move;
     } else {
       description = 'Go to game start';
     }
+
     return (
       <li>
         <button onClick={() => jumpTo(move)}>{description}</button>
       </li>
     );
   });
+  
   return (
     <div className="game">
       <div className="game-board">
