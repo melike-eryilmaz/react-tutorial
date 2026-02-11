@@ -1,3 +1,4 @@
+import { Button } from "@mantine/core";
 import { useState } from "react";
 
 function Square({value,onSquareClick}) {
@@ -6,7 +7,9 @@ function Square({value,onSquareClick}) {
     //setValue('X');
     //console.log(value+' clicked')
   //}
-  return <button className="square" onClick={onSquareClick}>{value}</button>;
+  return <Button variant="outline" color="red" className="square" onClick={onSquareClick}>{value}</Button>;
+  
+  //return <button className="square" onClick={onSquareClick}>{value}</button>;
 }
 
 export default function Board() {
