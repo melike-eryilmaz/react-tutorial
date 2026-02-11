@@ -10,6 +10,7 @@ function Square({value,onSquareClick}) {
 }
 
 export default function Board() {
+  const [xIsNext,setXISnext] = useState(true);
   const [squares,setSquares] = useState(Array(9).fill(null));
   function handleClick(index:number){
     /**const squares = [null, null, null, null, null, null, null, null, null];
@@ -17,9 +18,15 @@ export default function Board() {
       // Now `squares` is unchanged, but `nextSquares` first element is 'X' rather than `null`
      */
     const nextSquares = squares.slice();
+   if(xIsNext){
     nextSquares[index] = 'X';
-    setSquares(nextSquares);
-    console.log('clicked')
+   }
+   else{
+    nextSquares[index] = 'O';
+   }
+   setSquares(nextSquares);
+   setXISnext(!xIsNext);
+ 
   }
   return (
     <>
